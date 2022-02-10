@@ -1,7 +1,9 @@
-module ca.pragmaticcoding.starterfx {
+module ca.pragmaticcoding.hexmap {
     requires javafx.controls;
 
 
-    opens ca.pragmaticcoding.starterfx to javafx.controls;
-    exports ca.pragmaticcoding.starterfx;
+    opens ca.pragmaticcoding.hexmap to javafx.controls;
+    exports ca.pragmaticcoding.hexmap;
+    exports ca.pragmaticcoding.hexmap.tile;
+    opens ca.pragmaticcoding.hexmap.tile to javafx.controls;
 }

@@ -1,9 +1,9 @@
-package ca.pragmaticcoding.starterfx;
+package ca.pragmaticcoding.hexmap;
 
 import javafx.application.Application;
 
 public class Main {
     public static void main(String[] args) {
-        Application.launch(StarterApplication.class, args);
+        Application.launch(HexMapApplication.class, args);
     }
 }

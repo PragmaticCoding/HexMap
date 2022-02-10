@@ -24,8 +24,8 @@ tasks.withType(JavaCompile) {
 }
 
 application {
-    mainModule = 'ca.pragmaticcoding.starterfx'
-    mainClass = 'ca.pragmaticcoding.starterfx.Main'
+    mainModule = 'ca.pragmaticcoding.hexmap'
+    mainClass = 'ca.pragmaticcoding.hexmap.Main'
 }
 
 javafx {
