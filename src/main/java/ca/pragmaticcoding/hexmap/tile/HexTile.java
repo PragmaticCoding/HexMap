@@ -21,25 +21,22 @@ public class HexTile extends StackPane {
         this.model = model;
         initialize();
         setOnMouseClicked(evt -> clickHandler.run());
-        model.selectedProperty().addListener(observable -> pseudoClassStateChanged(selected, model.isSelected()));
     }
 
     private void initialize() {
+        styleAndSizeTile();
+        getChildren().addAll(createTerrainSprite(), createCoordinateLabel(), createOccupyingCounter());
+    }
+
+    private void styleAndSizeTile() {
         getStyleClass().add("hex-tile");
         maxHeightProperty().bind(model.heightProperty());
         maxWidthProperty().bind(model.widthProperty());
         minHeightProperty().bind(model.heightProperty());
         minWidthProperty().bind(model.widthProperty());
-        Label position = new Label(model.getColumn() + ":" + model.getRow());
-        position.getStyleClass().add("coordinate-label");
-        StackPane.setAlignment(position, Pos.BOTTOM_CENTER);
-        ImageView counterIV = new ImageView();
-        counterIV.setPreserveRatio(true);
-        counterIV.fitWidthProperty().bind(Bindings.multiply(model.widthProperty(), 0.75));
-        getChildren().addAll(createTerrainSprite(), position, counterIV);
-        counterIV.imageProperty().bind(Bindings.createObjectBinding(() -> model.getOccupier().image, model.occupierProperty()));
-        model.terrainTypeProperty().addListener(observable -> setBackground(new Background(new BackgroundFill(model.getTerrainType().colour, null, null))));
         setBackground(new Background(new BackgroundFill(model.getTerrainType().colour, null, null)));
+        model.selectedProperty().addListener(observable -> pseudoClassStateChanged(selected, model.isSelected()));
+        model.terrainTypeProperty().addListener(observable -> setBackground(new Background(new BackgroundFill(model.getTerrainType().colour, null, null))));
     }
 
     private TerrainSprite createTerrainSprite() {
@@ -47,5 +44,20 @@ public class HexTile extends StackPane {
         terrainSprite.fitWidthProperty().bind(Bindings.multiply(model.widthProperty(), 0.75));
         terrainSprite.imageIndexProperty().bindBidirectional(model.terrainProperty());
         return terrainSprite;
+    }
+
+    private Label createCoordinateLabel() {
+        Label position = new Label(model.getLocation().toString());
+        position.getStyleClass().add("coordinate-label");
+        StackPane.setAlignment(position, Pos.BOTTOM_CENTER);
+        return position;
+    }
+
+    private ImageView createOccupyingCounter() {
+        ImageView counterImage = new ImageView();
+        counterImage.setPreserveRatio(true);
+        counterImage.fitWidthProperty().bind(Bindings.multiply(model.widthProperty(), 0.75));
+        counterImage.imageProperty().bind(Bindings.createObjectBinding(() -> model.getOccupier().image, model.occupierProperty()));
+        return counterImage;
     }
 }

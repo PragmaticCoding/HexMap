@@ -25,9 +25,9 @@ public class HexMapInteractor {
     private void initializeTiles() {
         model.getTileModels().addAll(IntStream.range(1, 10)
                 .boxed()
-                .flatMap(row -> IntStream.range(1, 12).mapToObj(column -> new TileModel(row, column, model.hexWidthProperty(), model.hexHeightProperty())))
+                .flatMap(row -> IntStream.range(1, 12).mapToObj(column -> new TileModel(new Location(column, row), model.hexWidthProperty(), model.hexHeightProperty())))
                 .toList());
-        model.getTileModels().stream().filter(tileModel -> ((tileModel.getColumn() == 5) && (tileModel.getRow() == 8))).findFirst().ifPresent(tileModel -> tileModel.setOccupier(CounterType.CT1));
+        model.getTileModels().stream().filter(tileModel -> tileModel.getLocation().equals(new Location(5, 8))).findFirst().ifPresent(tileModel -> tileModel.setOccupier(CounterType.CT1));
     }
 
     public void activateTile(TileModel selectedModel) {
@@ -35,16 +35,8 @@ public class HexMapInteractor {
         selectedModel.setSelected(true);
     }
 
-    public void animateTanks() {
-        List<Location> locations1 = List.of(new Location(5, 10),
-                new Location(5, 9),
-                new Location(5, 8),
-                new Location(6, 7),
-                new Location(7, 7),
-                new Location(8, 6),
-                new Location(9, 6),
-                new Location(10, 6)
-        );
+
+    public void animateTank(List<Location> locations1) {
         Timeline timeline = new Timeline();
         IntegerProperty index = new SimpleIntegerProperty(0);
         AtomicInteger duration = new AtomicInteger(0);
@@ -59,8 +51,20 @@ public class HexMapInteractor {
             tileModel.setOccupier(CounterType.NONE);
         }
         model.getTileModels().stream()
-                .filter(tileModel -> ((tileModel.getColumn() == newLoc.column()) && (tileModel.getRow() == newLoc.getRow())))
+                .filter(tileModel -> ((tileModel.getLocation().equals(newLoc))))
                 .findAny()
                 .ifPresent(tileModel -> tileModel.setOccupier(CounterType.CT3));
+    }
+
+    public List<Location> calculateTankPath() {
+        return List.of(new Location(5, 10),
+                new Location(5, 9),
+                new Location(5, 8),
+                new Location(6, 7),
+                new Location(7, 7),
+                new Location(8, 6),
+                new Location(9, 6),
+                new Location(10, 6)
+        );
     }
 }

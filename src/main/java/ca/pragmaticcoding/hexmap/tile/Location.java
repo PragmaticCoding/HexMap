@@ -2,11 +2,15 @@ package ca.pragmaticcoding.hexmap.tile;
 
 public record Location(int column, int row) {
 
-    public int getColumn() {
-        return column;
+    public boolean equals(Location otherLocation) {
+        if (otherLocation == null) {
+            return false;
+        }
+        return ((this.row() == otherLocation.row()) && (this.column() == otherLocation.column()));
     }
 
-    public int getRow() {
-        return row;
+    @Override
+    public String toString() {
+        return column + ":" + row;
     }
 }

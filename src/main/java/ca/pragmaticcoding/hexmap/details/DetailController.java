@@ -12,12 +12,7 @@ public class DetailController {
     public DetailController(DetailModel model) {
         this.model = model;
         interactor = new DetailInteractor(model);
-        viewBuilder = new DetailViewBuilder(model, this::handleUpdate);
-    }
-
-    private void handleUpdate(Runnable afterAction) {
-        interactor.updateTile();
-        afterAction.run();
+        viewBuilder = new DetailViewBuilder(model, interactor::updateTile);
     }
 
     public void changeTile(TileModel tileModel) {

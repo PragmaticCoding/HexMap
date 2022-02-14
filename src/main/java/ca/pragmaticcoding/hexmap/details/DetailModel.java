@@ -1,41 +1,15 @@
 package ca.pragmaticcoding.hexmap.details;
 
 import ca.pragmaticcoding.hexmap.terrain.TerrainType;
-import javafx.beans.property.IntegerProperty;
+import ca.pragmaticcoding.hexmap.tile.Location;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
 public class DetailModel {
 
-    private final IntegerProperty row = new SimpleIntegerProperty(0);
-    private final IntegerProperty column = new SimpleIntegerProperty(0);
+    private final ObjectProperty<Location> location = new SimpleObjectProperty<>();
     private final ObjectProperty<Integer> terrain = new SimpleObjectProperty<>(0);
     private final ObjectProperty<TerrainType> terrainType = new SimpleObjectProperty<>(TerrainType.NONE);
-
-    public int getRow() {
-        return row.get();
-    }
-
-    public void setRow(int row) {
-        this.row.set(row);
-    }
-
-    public IntegerProperty rowProperty() {
-        return row;
-    }
-
-    public int getColumn() {
-        return column.get();
-    }
-
-    public void setColumn(int column) {
-        this.column.set(column);
-    }
-
-    public IntegerProperty columnProperty() {
-        return column;
-    }
 
     public int getTerrain() {
         return terrain.get();
@@ -59,5 +33,17 @@ public class DetailModel {
 
     public ObjectProperty<TerrainType> terrainTypeProperty() {
         return terrainType;
+    }
+
+    public Location getLocation() {
+        return location.get();
+    }
+
+    public void setLocation(Location location) {
+        this.location.set(location);
+    }
+
+    public ObjectProperty<Location> locationProperty() {
+        return location;
     }
 }

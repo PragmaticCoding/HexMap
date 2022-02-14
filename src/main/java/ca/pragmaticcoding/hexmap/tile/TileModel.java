@@ -9,38 +9,19 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableDoubleValue;
 
 public class TileModel {
-
-    private final ObjectProperty<Integer> row = new SimpleObjectProperty<>(0);
-    private final ObjectProperty<Integer> column = new SimpleObjectProperty<>(0);
     private final ObservableDoubleValue width;
     private final ObservableDoubleValue height;
     private final ObjectProperty<Integer> terrain = new SimpleObjectProperty<>(0);
     private final ObjectProperty<TerrainType> terrainType = new SimpleObjectProperty<>(TerrainType.NONE);
     private final BooleanProperty selected = new SimpleBooleanProperty(false);
     private final ObjectProperty<CounterType> occupier = new SimpleObjectProperty<>(CounterType.NONE);
+    private final ObjectProperty<Location> location = new SimpleObjectProperty<>(null);
 
 
-    public TileModel(int row, int column, ObservableDoubleValue width, ObservableDoubleValue height) {
-        this.row.set(row);
-        this.column.set(column);
+    public TileModel(Location location, ObservableDoubleValue width, ObservableDoubleValue height) {
+        this.location.set(location);
         this.width = width;
         this.height = height;
-    }
-
-    public Integer getRow() {
-        return row.get();
-    }
-
-    public ObjectProperty<Integer> rowProperty() {
-        return row;
-    }
-
-    public Integer getColumn() {
-        return column.get();
-    }
-
-    public ObjectProperty<Integer> columnProperty() {
-        return column;
     }
 
     public double getWidth() {
@@ -105,5 +86,13 @@ public class TileModel {
 
     public ObjectProperty<CounterType> occupierProperty() {
         return occupier;
+    }
+
+    public Location getLocation() {
+        return location.get();
+    }
+
+    public ObjectProperty<Location> locationProperty() {
+        return location;
     }
 }

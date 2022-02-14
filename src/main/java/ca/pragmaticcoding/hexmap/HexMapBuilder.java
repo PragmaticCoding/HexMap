@@ -1,5 +1,6 @@
 package ca.pragmaticcoding.hexmap;
 
+import ca.pragmaticcoding.hexmap.tile.Location;
 import ca.pragmaticcoding.hexmap.tile.TileController;
 import ca.pragmaticcoding.hexmap.tile.TileModel;
 import javafx.beans.binding.Bindings;
@@ -42,14 +43,14 @@ public class HexMapBuilder implements Builder<Region> {
         Pane pane = new Pane();
         pane.getChildren().addAll(model.getTileModels().stream().map(tileModel -> {
             Region hex = new TileController(tileModel, tileClickHandler).getView();
-            hex.translateXProperty().bind(Bindings.createDoubleBinding(() -> (tileModel.getColumn() - 1) * this.model.getHexWidth() * 0.75, this.model.hexWidthProperty()));
-            hex.translateYProperty().bind(Bindings.createDoubleBinding(() -> calculateYTranslate(tileModel.getRow(), tileModel.getColumn()), this.model.hexHeightProperty()));
+            hex.translateXProperty().bind(Bindings.createDoubleBinding(() -> (tileModel.getLocation().column() - 1) * this.model.getHexWidth() * 0.75, this.model.hexWidthProperty()));
+            hex.translateYProperty().bind(Bindings.createDoubleBinding(() -> calculateYTranslate(tileModel.getLocation()), this.model.hexHeightProperty()));
             return hex;
         }).toList());
         System.out.println("height: " + model.getHexHeight());
-        int numColumns = model.getTileModels().stream().map(TileModel::getColumn).mapToInt(v -> v).max().orElse(0);
-        int numRows = model.getTileModels().stream().map(TileModel::getRow).mapToInt(v -> v).max().orElse(0);
-        pane.minWidthProperty().bind(Bindings.createDoubleBinding(() -> model.getHexWidth() * numColumns * 0.76667, model.hexWidthProperty()));
+        int numColumns = model.getTileModels().stream().map(TileModel::getLocation).map(Location::column).mapToInt(v -> v).max().orElse(0);
+        int numRows = model.getTileModels().stream().map(TileModel::getLocation).map(Location::row).mapToInt(v -> v).max().orElse(0);
+        pane.minWidthProperty().bind(Bindings.createDoubleBinding(() -> (model.getHexWidth() * numColumns * 0.76667) + 5, model.hexWidthProperty()));
         pane.minHeightProperty().bind(Bindings.createDoubleBinding(() -> (numRows + 0.5) * model.getHexHeight(), model.hexHeightProperty()));
         pane.setStyle("-fx-background-color: teal;");
         StackPane stackPane = new StackPane(pane);
@@ -60,14 +61,14 @@ public class HexMapBuilder implements Builder<Region> {
     }
 
     private Region smallerButton() {
-        Button button = new Button("Smaller");
+        Button button = new Button("Run Animation");
         button.setOnAction(evt -> animator.run());
         return button;
 
     }
 
-    private double calculateYTranslate(int row, int column) {
-        return ((row - 1) * model.getHexHeight()) + (((column % 2) == 0) ? (model.getHexHeight() / 2) : 0);
+    private double calculateYTranslate(Location location) {
+        return ((location.row() - 1) * model.getHexHeight()) + (((location.column() % 2) == 0) ? (model.getHexHeight() / 2) : 0);
     }
 
 }

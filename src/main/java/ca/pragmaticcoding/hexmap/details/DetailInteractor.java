@@ -1,6 +1,7 @@
 package ca.pragmaticcoding.hexmap.details;
 
 import ca.pragmaticcoding.hexmap.tile.TileModel;
+import javafx.application.Platform;
 
 public class DetailInteractor {
 
@@ -13,16 +14,17 @@ public class DetailInteractor {
 
     public void newTile(TileModel tileModel) {
         currentTileModel = tileModel;
-        model.setRow(tileModel.getRow());
-        model.setColumn(tileModel.getColumn());
+        model.setLocation(tileModel.getLocation());
         model.setTerrain(tileModel.getTerrain());
         model.setTerrainType(tileModel.getTerrainType());
     }
 
     public void updateTile() {
         if (currentTileModel != null) {
-            currentTileModel.setTerrain(model.getTerrain());
-            currentTileModel.setTerrainType(model.getTerrainType());
+            Platform.runLater(() -> {
+                currentTileModel.setTerrain(model.getTerrain());
+                currentTileModel.setTerrainType(model.getTerrainType());
+            });
         }
     }
 }

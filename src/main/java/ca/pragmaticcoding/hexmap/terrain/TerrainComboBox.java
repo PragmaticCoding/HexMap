@@ -25,7 +25,7 @@ public class TerrainComboBox extends ComboBox<Integer> {
 
             {
                 setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-                terrainSprite.setFitWidth(40);
+                terrainSprite.setFitWidth(30);
             }
 
             @Override
