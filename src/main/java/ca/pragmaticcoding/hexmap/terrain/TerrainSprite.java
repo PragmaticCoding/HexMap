@@ -1,7 +1,7 @@
-package ca.pragmaticcoding.hexmap;
+package ca.pragmaticcoding.hexmap.terrain;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -10,7 +10,7 @@ import java.util.Objects;
 
 public class TerrainSprite extends ImageView {
 
-    private final IntegerProperty imageIndex = new SimpleIntegerProperty(0);
+    private final ObjectProperty<Integer> imageIndex = new SimpleObjectProperty<>(0);
 
     public TerrainSprite() {
         stuff();
@@ -21,12 +21,12 @@ public class TerrainSprite extends ImageView {
         setImage(image);
         double cellSize = image.getWidth();
         setPreserveRatio(true);
-        setOpacity(0.7);
+        setOpacity(0.8);
         setViewport(new Rectangle2D(0, 0, cellSize, cellSize));
         imageIndex.addListener(observable -> setViewport(new Rectangle2D(0, cellSize * imageIndex.get(), cellSize, cellSize)));
     }
 
-    public IntegerProperty imageIndexProperty() {
+    public ObjectProperty<Integer> imageIndexProperty() {
         return imageIndex;
     }
 }

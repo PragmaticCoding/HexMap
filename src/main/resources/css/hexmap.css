@@ -12,7 +12,6 @@
   -fx-shape: "M 300,150 225,280 75,280 0,150 75,20 225,20 z";
     -fx-border-color: -border-colour;
     -fx-border-width: 1px;
-    -fx-background-color: white;
 }
 
 .coordinate-label {
@@ -20,5 +19,28 @@
 }
 
 .hex-tile:hover {
+  -border-colour: orange;
+}
+
+.hex-tile:focused {
   -border-colour: red;
+}
+
+.hex-tile:selected {
+  -border-colour: red;
+}
+
+.title-text {
+  -fx-font-size: 25px;
+}
+
+.label-text {
+  -fx-font-size: 12px;
+  -fx-font-color: teal;
+  -fx-font-weight: bold;
+}
+
+.label-text {
+  -fx-font-size: 14px;
+  -fx-font-color: darkgrey;
 }

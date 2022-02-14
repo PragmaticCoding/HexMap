@@ -14,12 +14,16 @@ public class TextWidgets {
     }
 
     public static Text boundStyledText(ObservableStringValue contents, String styleClass) {
-        Text results = new Text("");
+        Text results = styledText("", styleClass);
         results.textProperty().bind(contents);
-        results.getStyleClass().add(styleClass);
         return results;
     }
 
+    public static Text styledText(String contents, String styleClass) {
+        Text results = new Text(contents);
+        results.getStyleClass().add(styleClass);
+        return results;
+    }
 
     public static Text boundDataText(ObservableStringValue contents) {
         Text results = new Text("");
