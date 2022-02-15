@@ -12,18 +12,16 @@ public class HexMapController {
 
     private final HexMapBuilder viewBuilder;
     private final HexMapInteractor interactor;
-    private final DetailController detailController;
 
     public HexMapController() {
         HexMapModel model = new HexMapModel();
         interactor = new HexMapInteractor(model);
-        detailController = new DetailController(model.getDetailModel());
+        DetailController detailController = new DetailController(model.activeTileProperty());
         viewBuilder = new HexMapBuilder(model, detailController.getView(), this::handleHexClick, this::animateTank);
     }
 
     private void handleHexClick(TileModel tileModel) {
         interactor.activateTile(tileModel);
-        detailController.changeTile(tileModel);
     }
 
     private void animateTank() {

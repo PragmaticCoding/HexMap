@@ -47,7 +47,6 @@ public class HexMapBuilder implements Builder<Region> {
             hex.translateYProperty().bind(Bindings.createDoubleBinding(() -> calculateYTranslate(tileModel.getLocation()), this.model.hexHeightProperty()));
             return hex;
         }).toList());
-        System.out.println("height: " + model.getHexHeight());
         int numColumns = model.getTileModels().stream().map(TileModel::getLocation).map(Location::column).mapToInt(v -> v).max().orElse(0);
         int numRows = model.getTileModels().stream().map(TileModel::getLocation).map(Location::row).mapToInt(v -> v).max().orElse(0);
         pane.minWidthProperty().bind(Bindings.createDoubleBinding(() -> (model.getHexWidth() * numColumns * 0.76667) + 5, model.hexWidthProperty()));

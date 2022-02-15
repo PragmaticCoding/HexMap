@@ -33,6 +33,7 @@ public class HexMapInteractor {
     public void activateTile(TileModel selectedModel) {
         model.getTileModels().forEach(tileModel -> tileModel.setSelected(false));
         selectedModel.setSelected(true);
+        model.setActiveTile(selectedModel);
     }
 
 
@@ -41,12 +42,10 @@ public class HexMapInteractor {
         IntegerProperty index = new SimpleIntegerProperty(0);
         AtomicInteger duration = new AtomicInteger(0);
         timeline.getKeyFrames().addAll(locations1.stream().map(location -> new KeyFrame(Duration.millis(duration.getAndAdd(800)), evt -> moveTank(location), new KeyValue(index, 10))).toList());
-        System.out.println("Starting transition");
         timeline.play();
     }
 
     private void moveTank(Location newLoc) {
-        System.out.println("Moving to: " + newLoc.column() + ":" + newLoc.row());
         for (TileModel tileModel : model.getTileModels()) {
             tileModel.setOccupier(CounterType.NONE);
         }

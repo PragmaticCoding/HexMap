@@ -13,10 +13,10 @@ public class TerrainSprite extends ImageView {
     private final ObjectProperty<Integer> imageIndex = new SimpleObjectProperty<>(0);
 
     public TerrainSprite() {
-        stuff();
+        initialize();
     }
 
-    private void stuff() {
+    private void initialize() {
         Image image = new Image(Objects.requireNonNull(TerrainSprite.class.getResource("/images/sprites-terrains.png")).toExternalForm());
         setImage(image);
         double cellSize = image.getWidth();
